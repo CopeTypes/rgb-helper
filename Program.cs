@@ -11,20 +11,12 @@ namespace RGBHelper
     {
 
 
-        public static Color kbDefault = Utils.getColorFromString("#913de2");
+        public static Color DefaultColor;
         
         public static async Task Main(string[] args)
         {
 
-            if (args.Length < 1)
-            {
-                Console.WriteLine("No default keyboard color set, using meteor.");
-            }
-
-            if (args.Length > 0)
-            {
-                kbDefault = Utils.getColorFromString(args[0]);
-            }
+            DefaultColor = Color.Green;
             
             await RGBControl.prep();
             await CommandSystem.start();

@@ -21,16 +21,71 @@ namespace RGBHelper
 
         public static async Task prep()
         {
-            Console.WriteLine("Initializing chroma connection...");
+            Console.WriteLine("Initializing chroma connection...\n");
             rgb = await ColoreProvider.CreateNativeAsync();
-            Console.WriteLine("Waiting for SDK...");
-            Thread.Sleep(2500); //https://github.com/chroma-sdk/Colore/issues/274
+            Console.WriteLine("Waiting for SDK...\n");
+            Thread.Sleep(2500); // https://github.com/chroma-sdk/Colore/issues/274
+            Console.WriteLine("Connection established with sdk version " + rgb.SdkVersion + "\n");
+            await solidEverything(Color.Black); // clean leftover (frozen) effects
         }
 
 
+        public static IChroma getChroma()
+        {
+            return rgb;
+        }
+        
+        //GLOBAL
+        public static async Task solidEverything(Color color)
+        {
+            await rgb.SetAllAsync(color);
+        }
+        //END GLOBAL
+        
+        
+        //MOUSE & MOUSEPAD
+        public static async Task solidMouse(Color color)
+        {
+            await rgb.Mouse.SetAllAsync(color);
+        }
+
+        public static async Task solidMousePad(Color color)
+        {
+            await rgb.Mousepad.SetAllAsync(color);
+        }
+        //END MOUSE & MOUSEPAD
+        
+        
+        //HEADSET
+        public static async Task solidHeadset(Color color)
+        {
+            await rgb.Headset.SetAllAsync(color);
+        }
+        //END HEADSET
+        
+        
+        //KEYBOARD 
+        
+        public static async Task flashKb(Color color, int times, int side, int delay = 250)
+        { // 1 = left , 2 = right , 3 = top , 4 = bottom
+
+
+            while (times > 0)
+            {
+                await KeyboardUtils.setSide(Color.Black, side, baseKeyboard);
+                Thread.Sleep(delay);
+                await KeyboardUtils.setSide(color, side, baseKeyboard);
+                Thread.Sleep(delay);
+                times--;
+            }
+            
+            
+        }
+        
+        
         public static async Task restoreKb()
         {
-            await solidKb(Program.kbDefault);
+            await solidKb(Program.DefaultColor);
         }
 
         public static async Task solidTop(Color color)
@@ -108,7 +163,7 @@ namespace RGBHelper
 
                     break;
                 }
-                // going up
+                // going down
                 case 2:
                 {
                     if (delay == 1) delay = 90;
@@ -169,8 +224,9 @@ namespace RGBHelper
                 }
 
             }
-        
-
         }
+        //END KEYBOARD
+        
+        
     }
 }

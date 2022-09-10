@@ -70,7 +70,7 @@
           <DependentUpon>Colore.dll.resx</DependentUpon>
         </Compile>
         <Compile Include="CommandSystem.cs" />
-        <Compile Include="Effects.cs" />
+        <Compile Include="KeyboardUtils.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="RGBControl.cs" />
